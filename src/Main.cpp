@@ -139,47 +139,8 @@ int main(int argc, char** argv) {
                 mutex.unlock();
             }
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(7));
+        std::this_thread::sleep_for(std::chrono::milliseconds(3));
     }
-/*
-    std::vector<sf::Color> colours;
-    for (unsigned y = 0; y < height / pixelSize; y++) {
-        for (unsigned x = 0; x < width / pixelSize; x++) {
-            colours.clear();
-            for (unsigned oy = 0; oy < pixelSize; oy++) {
-                for (unsigned ox = 0; ox < pixelSize; ox++) {
-                    unsigned localX = ox + x * pixelSize;
-                    unsigned localY = oy + y * pixelSize;
-                    colours.push_back(image.getPixel(localX, localY));
-                }
-            }
-
-            unsigned totalRed   = 0;
-            unsigned totalGreen = 0;
-            unsigned totalBlue  = 0;
-            for (auto c : colours) {
-                totalRed    += c.r;
-                totalGreen  += c.g;
-                totalBlue   += c.b;
-            }
-            auto total = colours.size();
-            sf::Color avgColour{
-                uint8_t(totalRed / total), 
-                uint8_t(totalGreen / total), 
-                uint8_t(totalBlue / total)};
-
-            for (unsigned oy = 0; oy < pixelSize; oy++) {
-                for (unsigned ox = 0; ox < pixelSize; ox++) {
-                    unsigned localX = ox + x * pixelSize;
-                    unsigned localY = oy + y * pixelSize;
-                    mutex.lock();
-                    newImage.setPixel(localX, localY, avgColour);
-                    mutex.unlock();
-                }
-            }
-            std::this_thread::sleep_for(std::chrono::milliseconds(7));
-        }
-    } /*/
     std::cout << "Saving image...\n";
     newImage.saveToFile("out.jpg");
     std::cout << "Complete!\n"; 
