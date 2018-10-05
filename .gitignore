@@ -1,0 +1,12 @@
+### CMake ###
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+
+#exe
+pixelator
+
+#vscode stuff
+settings.json
+
