@@ -17,13 +17,24 @@ namespace {
     }
 
     void visualise(const sf::Image& ogImage, const sf::Image& newImage) {
-        unsigned w = ogImage.getSize().x;
-        unsigned h = ogImage.getSize().y;
+        mutex.lock();
+        float w = (float)ogImage.getSize().x;
+        float h = (float)ogImage.getSize().y;
 
-        sf::RenderWindow window({w, h}, "Pixelator");
+        sf::RenderWindow window({(unsigned)w, (unsigned)h}, "Pixelator");
+    
 
         sf::RectangleShape ogImageRect({w, h});
         sf::RectangleShape newImageRect({w, h});
+
+        sf::Texture ogTex;
+        ogTex.loadFromImage(ogImage);
+        ogImageRect.setTexture(&ogTex);
+
+        sf::Texture newTex;
+        newTex.loadFromImage(newImage);
+        newImageRect.setTexture(&newTex);
+        mutex.unlock();
 
         while (window.isOpen()) {
             sf::Event e;
@@ -31,6 +42,10 @@ namespace {
                 if (e.type == sf::Event::Closed) window.close();
             }
             window.clear();
+
+            mutex.lock();
+            newTex.loadFromImage(newImage);
+            mutex.unlock();
 
             window.draw(ogImageRect);
             window.draw(newImageRect);
@@ -110,6 +125,7 @@ int main(int argc, char** argv) {
                     mutex.unlock();
                 }
             }
+            std::this_thread::sleep_for(std::chrono::milliseconds(7));
         }
     } 
     std::cout << "Saving image...\n";
