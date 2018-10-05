@@ -22,7 +22,6 @@ int main(int argc, char** argv) {
     else {
         std::cout << "Too few arguments.\nUsage: \n";
         std::cout << "pixelator <image-file-path> <pixel-size>\n";
-        //std::cout << "pixelator <image-file-path> <pixel-size> <pixelImage>\n";
         return 0;
     }
 
