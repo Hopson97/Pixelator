@@ -36,5 +36,5 @@ if(UNIX)
     list(APPEND ADDITIONAL_LINK_FLAGS dl)
 endif(UNIX)
 
-
-target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${ADDITIONAL_LINK_FLAGS})
+find_package(Threads)
+target_link_libraries(${PROJECT_NAME} Threads::Threads ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${ADDITIONAL_LINK_FLAGS})

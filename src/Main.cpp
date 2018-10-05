@@ -1,14 +1,43 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <thread>
+#include <mutex>
 
-bool isValidSize(unsigned size, unsigned pixelSize, const char* desc) {
-    if (size % pixelSize != 0) {
-        std::cout << "ERROR: Image " << desc << " is not divisible by pixel size.\n";
-        std::cout << desc << " is " << size << '\n';
-        std::cout << "Division result: " << size % pixelSize << "\n";
-        return false;
+namespace {
+    std::mutex mutex;
+
+    bool isValidSize(unsigned size, unsigned pixelSize, const char* desc) {
+        if (size % pixelSize != 0) {
+            std::cout << "ERROR: Image " << desc << " is not divisible by pixel size.\n";
+            std::cout << desc << " is " << size << '\n';
+            std::cout << "Division result: " << size % pixelSize << "\n";
+            return false;
+        }
+        return true;
     }
-    return true;
+
+    void visualise(const sf::Image& ogImage, const sf::Image& newImage) {
+        unsigned w = ogImage.getSize().x;
+        unsigned h = ogImage.getSize().y;
+
+        sf::RenderWindow window({w, h}, "Pixelator");
+
+        sf::RectangleShape ogImageRect({w, h});
+        sf::RectangleShape newImageRect({w, h});
+
+        while (window.isOpen()) {
+            sf::Event e;
+            while (window.pollEvent(e)) {
+                if (e.type == sf::Event::Closed) window.close();
+            }
+            window.clear();
+
+            window.draw(ogImageRect);
+            window.draw(newImageRect);
+
+            window.display();
+        }
+    }
 }
 
 int main(int argc, char** argv) {
@@ -40,7 +69,11 @@ int main(int argc, char** argv) {
 
     std::cout << "Creating new image...\n";
     sf::Image newImage;
-    newImage.create(width, height);
+    newImage.create(width, height, sf::Color::Transparent);
+
+    std::thread visualiseThread([&]() {
+        visualise(image, newImage);
+    });
 
     std::vector<sf::Color> colours;
     for (unsigned y = 0; y < height / pixelSize; y++) {
@@ -72,7 +105,9 @@ int main(int argc, char** argv) {
                 for (unsigned ox = 0; ox < pixelSize; ox++) {
                     unsigned localX = ox + x * pixelSize;
                     unsigned localY = oy + y * pixelSize;
+                    mutex.lock();
                     newImage.setPixel(localX, localY, avgColour);
+                    mutex.unlock();
                 }
             }
         }
@@ -80,4 +115,5 @@ int main(int argc, char** argv) {
     std::cout << "Saving image...\n";
     newImage.saveToFile("out.jpg");
     std::cout << "Complete!\n"; 
+    visualiseThread.join();
 }
