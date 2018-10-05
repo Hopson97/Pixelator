@@ -18,8 +18,9 @@ int main(int argc, char** argv) {
         pixelSize = std::stoi(pxString); //TODO Error check
     }
     else {
-        std::cout << "Usage: \n";
-        std::cout << "pixelator <image-file-path> <pixel-size>";
+        std::cout << "Too few arguments.\nUsage: \n";
+        std::cout << "pixelator <image-file-path> <pixel-size>\n";
+        std::cout << "pixelator <image-file-path> <pixel-size> <pixelImage>\n";
         return 0;
     }
 
@@ -30,6 +31,20 @@ int main(int argc, char** argv) {
     std::cout << "Validating image size to pixel size ratio...\n";    
     if (!isValidSize(image.getSize().x, pixelSize, "width") || 
         !isValidSize(image.getSize().y, pixelSize, "height")) {
-            return -1;
+        return -1;
+    }
+
+    unsigned width  = image.getSize().x;
+    unsigned height = image.getSize().y;
+
+    std::cout << "Creating new image...\n";
+    sf::Image newImage;
+    newImage.create(image.getSize().x, image.getSize().y);
+
+    std::vector<sf::Color> colours;
+    for (unsigned y = 0; y < height / pixelSize; y++) {
+        for (unsigned x = 0; x < width / pixelSize; x++) {
+            
         }
+    }    
 }
