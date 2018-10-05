@@ -1,8 +1,12 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-bool isValidSize(unsigned size, unsigned pxlSize) {
-    
+bool isValidSize(unsigned size, unsigned pixelSize, const char* desc) {
+    if (size % pixelSize != 0) {
+        std::cout << "ERROR: Image " << desc << " is not divisible by pixel size.\n";
+        return false;
+    }
+    return true;
 }
 
 int main(int argc, char** argv) {
@@ -24,12 +28,8 @@ int main(int argc, char** argv) {
     image.loadFromFile(fileName);
 
     std::cout << "Validating image size to pixel size ratio...\n";    
-    if (image.getSize().x % pixelSize != 0) {
-        std::cout << "ERROR: Image width is not divisible by pixel size.\n";
-        return -1;
-    }
-    if (image.getSize().x % pixelSize != 0) {
-        std::cout << "ERROR: Image height is not divisible by pixel size.\n";
-        return -1;
-    }
+    if (!isValidSize(image.getSize().x, pixelSize, "width") || 
+        !isValidSize(image.getSize().y, pixelSize, "height")) {
+            return -1;
+        }
 }
