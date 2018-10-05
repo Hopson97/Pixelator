@@ -6,6 +6,16 @@ It works by taking the averge colour around an area, and then filling that area 
 
 ## Building
 
+Requires SFML library
+
+On Ubuntu:
+
+```
+sudo apt-get install libsfml-dev
+```
+
+Building:
+
 ```
 git clone https://github.com/Hopson97/Pixelator.git
 cd Pixelator
