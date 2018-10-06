@@ -24,6 +24,7 @@ namespace {
         float h = (float)ogImage.getSize().y;
 
         sf::RenderWindow window({(unsigned)w, (unsigned)h}, "Pixelator");
+        window.setFramerateLimit(60);
     
 
         sf::RectangleShape ogImageRect({w, h});
@@ -139,7 +140,7 @@ int main(int argc, char** argv) {
                 mutex.unlock();
             }
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(3));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
     std::cout << "Saving image...\n";
     newImage.saveToFile("out.jpg");

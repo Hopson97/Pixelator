@@ -9,7 +9,10 @@ pixelator
 
 #vscode stuff
 settings.json
+.vscode 
 
-#app stuff
-mona_lisa.jpg
-out.jpg
+#Testing
+*.jpg
+*.jpeg
+*.png
+*.bmp
