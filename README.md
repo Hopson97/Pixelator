@@ -2,7 +2,7 @@
 
 Simple program to take an image and pixelate it.
 
-It works by taking the averge colour around an area, and then filling that area with that colour
+It works by taking the average colour around an area, and then filling that area with that colour
 
 ## Building
 
