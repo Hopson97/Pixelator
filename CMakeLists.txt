@@ -14,9 +14,9 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 #Define the executable
 add_executable(
-    ${PROJECT_NAME} 
+    ${PROJECT_NAME}
     src/Main.cpp
-)
+    )
 
 SET(ADDITIONAL_LINK_FLAGS)
 if(UNIX)
