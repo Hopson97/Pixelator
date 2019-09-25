@@ -39,4 +39,4 @@ The pixel size must be a number divisible exactly by both the image width and he
 
 Output: 
 
-![MonaLisaPixel](https://i.imgur.com/w2MMtSv.png).md
+![MonaLisaPixel](https://i.imgur.com/w2MMtSv.png)
